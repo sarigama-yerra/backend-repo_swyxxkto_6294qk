@@ -12,7 +12,7 @@ Model name is converted to lowercase for the collection name:
 """
 
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, Dict, Any
 
 # Example schemas (replace with your own):
 
@@ -37,6 +37,19 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Mood Story app schema
+class Storyentry(BaseModel):
+    """
+    Mood Story entries
+    Collection name: "storyentry"
+    """
+    image_data: str = Field(..., description="Captured image as data URL (base64)")
+    mood: str = Field(..., description="Primary detected mood, e.g., happy, sad, surprised")
+    expressions: Dict[str, float] = Field(..., description="Expression scores from face-api.js")
+    story: str = Field(..., description="Generated story text personalized to the mood")
+    illustration: Optional[str] = Field(None, description="Illustration key used on frontend")
+    notes: Optional[str] = Field(None, description="Optional notes or metadata")
 
 # Add your own schemas here:
 # --------------------------------------------------
